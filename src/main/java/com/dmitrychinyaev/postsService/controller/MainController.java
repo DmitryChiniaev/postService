@@ -2,7 +2,7 @@ package com.dmitrychinyaev.postsService.controller;
 
 import com.dmitrychinyaev.postsService.domain.Message;
 import com.dmitrychinyaev.postsService.domain.User;
-import com.dmitrychinyaev.postsService.repository.MessageRepository;
+import com.dmitrychinyaev.postsService.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import java.util.Map;
 @Controller
 @RequiredArgsConstructor
 public class MainController {
-    private final MessageRepository messageRepository;
+    private final MessageService messageService;
 
     @GetMapping("/")
     public String greeting(Map<String, Object> model) {
@@ -24,7 +24,7 @@ public class MainController {
 
     @GetMapping("/main")
     public String main(Map<String, Object> model) {
-        Iterable<Message> messages = messageRepository.findAll();
+        Iterable<Message> messages = messageService.allMessagesList();
         model.put("messages", messages);
         return "main";
     }
@@ -35,9 +35,9 @@ public class MainController {
             @RequestParam String text, @RequestParam String tag,
             Map<String, Object> model) {
 
-        messageRepository.save(new Message(text, tag, user));
+        messageService.saveMessage(new Message(text, tag, user));
 
-        Iterable<Message> messages = messageRepository.findAll();
+        Iterable<Message> messages = messageService.allMessagesList();
         model.put("messages", messages);
         return "main";
     }
@@ -45,9 +45,9 @@ public class MainController {
     @PostMapping("filterByTag")
     public String filterByTag(@RequestParam String filter, Map<String, Object> model) {
         if (filter.isEmpty()) {
-            model.put("messages", messageRepository.findAll());
+            model.put("messages", messageService.allMessagesList());
         } else {
-            model.put("messages", messageRepository.findByTag(filter));
+            model.put("messages", messageService.findByTag(filter));
         }
         return "main";
     }
@@ -55,9 +55,9 @@ public class MainController {
     @PostMapping("filterByNickname")
     public String filterByNickname(@RequestParam String filter, Map<String, Object> model) {
         if (filter.isEmpty()) {
-            model.put("messages", messageRepository.findAll());
+            model.put("messages", messageService.allMessagesList());
         } else {
-            model.put("messages", messageRepository.findByAuthor_Username(filter));
+            model.put("messages", messageService.findByUsername(filter));
         }
         return "main";
     }

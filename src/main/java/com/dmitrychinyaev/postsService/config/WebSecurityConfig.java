@@ -1,7 +1,6 @@
 package com.dmitrychinyaev.postsService.config;
-import com.dmitrychinyaev.postsService.service.UserService;
+import com.dmitrychinyaev.postsService.service.UserSecurityService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,14 +8,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserService service;
+    private final UserSecurityService userSecurityService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -35,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(service)
+        auth.userDetailsService(userSecurityService)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());
                 }
 }
