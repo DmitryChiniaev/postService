@@ -6,6 +6,7 @@ import com.dmitrychinyaev.postsService.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,9 +24,15 @@ public class MainController {
     }
 
     @GetMapping("/main")
-    public String main(Map<String, Object> model) {
+    public String main(@RequestParam (required = false, defaultValue = "") String filter, Model model) {
         Iterable<Message> messages = messageRepository.findAll();
-        model.put("messages", messages);
+
+        if (filter.isEmpty()) {
+            model.addAttribute("messages", messageRepository.findAll());
+        } else {
+            model.addAttribute("messages", messageRepository.findByTag(filter));
+        }
+        model.addAttribute("messages", messages);
         return "main";
     }
 
@@ -39,16 +46,6 @@ public class MainController {
 
         Iterable<Message> messages = messageRepository.findAll();
         model.put("messages", messages);
-        return "main";
-    }
-
-    @PostMapping("filterByTag")
-    public String filterByTag(@RequestParam String filter, Map<String, Object> model) {
-        if (filter.isEmpty()) {
-            model.put("messages", messageRepository.findAll());
-        } else {
-            model.put("messages", messageRepository.findByTag(filter));
-        }
         return "main";
     }
 
