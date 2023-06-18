@@ -1,18 +1,22 @@
 package com.dmitrychinyaev.postsService.service;
 
+import com.dmitrychinyaev.postsService.domain.User;
 import com.dmitrychinyaev.postsService.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
-    private final UserRepository repository;
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByUsername(username);
+public class UserService {
+    private final UserRepository userRepository;
+
+    public User findByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
+    public void saveUser(User user){
+        userRepository.save(user);
     }
 }
