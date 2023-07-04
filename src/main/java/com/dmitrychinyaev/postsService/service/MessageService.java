@@ -26,6 +26,6 @@ public class MessageService {
     }
 
     public List<Message> findByUsername(String author){
-        return messageRepository.findByAuthor_Username (author);
+        return messageRepository.findByAuthor_Username(author);
     }
 }
