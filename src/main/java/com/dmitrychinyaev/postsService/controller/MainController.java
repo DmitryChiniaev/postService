@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -28,9 +29,10 @@ public class MainController {
                        String tagFilter, Model model) {
         Iterable<Message> messages = messageService.allMessagesList();
         if (tagFilter != null) {
-            messages = messageService.findByTag(tagFilter);
-        } else if (filter != null) {
-            messages = messageService.findByUsername(filter);
+            messages = findByTag(tagFilter);
+        }
+        if (filter != null) {
+            messages = findByUsername(filter);
         }
         model.addAttribute("messages", messages);
         return "main";
@@ -48,23 +50,17 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping("filterByNickname")
-    public String filterByNickname(@RequestParam String filter, Map<String, Object> model) {
-        if (filter.isEmpty()) {
-            model.put("messages", messageService.allMessagesList());
-        } else {
-            model.put("messages", messageService.findByUsername(filter));
+    public List<Message> findByTag(String tag){
+        if(tag.equals("")){
+            return messageService.allMessagesList();
         }
-        return "main";
+        return messageService.findByTag(tag);
     }
 
-    @PostMapping("filterByTag")
-    public String filterByTag(@RequestParam String tagFilter, Map<String, Object> model) {
-      if (tagFilter.isEmpty()) {
-            model.put("messages", messageService.allMessagesList());
-        } else {
-            model.put("messages", messageService.findByTag(tagFilter));
+    public List<Message> findByUsername(String username){
+        if(username.equals("")){
+            return messageService.allMessagesList();
         }
-        return "main";
+        return messageService.findByUsername(username);
     }
 }
