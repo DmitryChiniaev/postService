@@ -2,6 +2,7 @@ package com.dmitrychinyaev.postsService.controller;
 
 import com.dmitrychinyaev.postsService.domain.Role;
 import com.dmitrychinyaev.postsService.domain.User;
+import com.dmitrychinyaev.postsService.service.MessageService;
 import com.dmitrychinyaev.postsService.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +21,13 @@ import java.util.stream.Collectors;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     private final UserService userService;
+    private final MessageService messageService;
+
+    @GetMapping("/remove")
+    public String deleteAllMessages(Model model){
+        messageService.deleteAllMessages();
+        return "remove";
+    }
     @GetMapping
     public String userList(Model model){
         model.addAttribute("users",userService.findAllUsers());

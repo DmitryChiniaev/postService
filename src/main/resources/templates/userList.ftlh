@@ -2,7 +2,11 @@
 
 <@c.page>
 List of users
-
+<div>
+<form action="/user/remove" method="get">
+    <button type="submit">Удалить все сообщения</button>
+</form>
+</div>
 <table>
     <thead>
     <tr>
