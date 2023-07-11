@@ -2,7 +2,6 @@ package com.dmitrychinyaev.postsService.controller;
 
 import com.dmitrychinyaev.postsService.domain.Role;
 import com.dmitrychinyaev.postsService.domain.User;
-import com.dmitrychinyaev.postsService.repository.UserRepository;
 import com.dmitrychinyaev.postsService.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
