@@ -30,6 +30,11 @@ public class MainController {
         return "greeting";
     }
 
+    @GetMapping("/test")
+    public String testPage () {
+        return "index";
+    }
+
     @GetMapping("/main")
     public String main(@RequestParam(required = false) String filter,
                        String tagFilter, Model model) {
