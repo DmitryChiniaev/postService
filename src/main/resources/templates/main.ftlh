@@ -7,7 +7,7 @@
     <span><a href="/user">User list</a></span>
 </div>
 
-//<body class="" style="background-color: #000500; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
+<body class="" style="background-color: #ff9218; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
 </body>
 <div>
     <form method="post" enctype="multipart/form-data">
