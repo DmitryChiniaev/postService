@@ -1,3 +1,4 @@
+<#import "login.ftlh" as l>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">PostService</a>
@@ -14,5 +15,6 @@
           <a class="nav-link active" aria-current="page" href="/main">Messages list</a>
         </li>
       </ul>
+      <@l.logout />
     </div>
 </nav>
