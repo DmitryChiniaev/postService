@@ -1,8 +1,8 @@
 <#import "parts/common.ftlh" as c>
-
 <@c.page>
-<div>
-    <span><a href="/user">User list</a></span>
+
+<div class="col mt-2">
+    <h5><span class="badge rounded-pill text-bg-light"><a href="/user">User list</a></span></h5>
 </div>
 
 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -11,22 +11,16 @@
 <div class="collapse" id="collapseExample">
 <form class="row g-3 mt-2" method="post" enctype="multipart/form-data">
     <div class="col-sm-3">
-        <div class="form-floating">
             <input type="text" class="form-control" name="text" id="floatingInput" placeholder="Введите сообщение" />
-            <label for="floatingInput">Введите сообщение</label>
-        </div>
     </div>
     <div class="col-sm">
-        <div class="form-floating">
             <input type="text" class="form-control" name="tag" id="floatingTag" placeholder="Тэг">
-            <label for="floatingTag">Тэг</label>
-        </div>
     </div>
     <div class="col-sm-4">
         <input type="file" class="form-control" id="formFile" name="file">
     </div>
     <div class="col">
-        <input type="hidden" class="form-control" name="_csrf" value="${_csrf.token}" />
+        <input type="hidden" class="form-control" name="_csrf" value="${_csrf.token}">
     </div>
     <div class="col-sm">
         <button type="submit" class="btn btn-outline-primary">Добавить</button>
@@ -34,9 +28,7 @@
 </form>
 </div>
 
-<div>Список сообщений</div>
-
-<form class="row gx-5" method="get" action="/main">
+<form class="row gx-5 mt-2" method="get" action="/main">
     <div class="col-3">
         <input class="form-control" type="text" name="tagFilter" value="${tagFilter?ifExists}">
     </div>
@@ -47,26 +39,35 @@
 
 <form class="row gx-5" method="get" action="/main">
     <div class="col-3">
-        <input class="form-control" type="text" name="tagFilter" value="${tagFilter?ifExists}">
+        <input class="form-control" type="text" name="filter" value="${filter?ifExists}"">
     </div>
     <div class="col">
-        <button type="submit" class="btn btn-outline-primary">Найти по тегу</button>
+        <button type="submit" class="btn btn-outline-primary">Найти по автору</button>
     </div>
 </form>
 
-<#list messages as message>
-<div>
-    <b>${message.id}</b>
-    <span>${message.text}</span>
-    <i>${message.tag}</i>
-    <strong>${message.authorName}</strong>
-    <div>
-        <#if message.filename??>
-            <img src="/img/${message.filename}">
-        </#if>
+<div class="row row-cols-auto row-cols-md-4 g-4">
+    <#list messages as message>
+    <div class="col">
+    <div class="card border-dark mb-3 my-3" style="max-width: 18rem;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <#if message.filename??>
+                    <img src="/img/${message.filename}" class="img-fluid rounded-start">
+                </#if>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title"><i>${message.tag}</i></h5>
+                    <p class="card-text"><span>${message.text}</span></p>
+                    <p class="card-text"><small class="text-body-secondary"><strong>${message.authorName}</strong></small></p>
+                </div>
+            </div>
+        </div>
     </div>
+    </div>
+    <#else>
+    No message
+    </#list>
 </div>
-<#else>
-No message
-</#list>
 </@c.page>
