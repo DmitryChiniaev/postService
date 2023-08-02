@@ -12,6 +12,14 @@
             <label for="floatingPassword">Password</label>
         </div>
     </div>
+    <#if isRegisterForm>
+    <div class="col-sm-4">
+         <div class="form-floating mb-3">
+            <input type="password" name="email" class="form-control" id="floatingPassword" placeholder="john@smith.com"/>
+            <label for="floatingPassword">E-mail</label>
+        </div>
+    </div>
+    </#if>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
     <div class="row row-cols-auto">
         <div class="col">

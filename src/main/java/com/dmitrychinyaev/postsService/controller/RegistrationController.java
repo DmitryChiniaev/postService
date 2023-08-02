@@ -22,17 +22,10 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(User user, Map<String, Object> model){
-        User checkUser = userService.findByUsername(user.getUsername());
-
         if(checkUser != null){
             model.put("message", "User already exists!");
             return "registration";
         }
-
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
-        userService.saveUser(user);
-
         return "redirect:/login";
     }
 }
