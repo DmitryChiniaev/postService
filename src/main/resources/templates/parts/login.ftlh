@@ -15,8 +15,8 @@
     <#if isRegisterForm>
     <div class="col-sm-4">
          <div class="form-floating mb-3">
-            <input type="password" name="email" class="form-control" id="floatingPassword" placeholder="john@smith.com"/>
-            <label for="floatingPassword">E-mail</label>
+            <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="john@smith.com"/>
+            <label for="floatingEmail">E-mail</label>
         </div>
     </div>
     </#if>

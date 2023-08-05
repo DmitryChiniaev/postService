@@ -2,6 +2,7 @@
 <#import "parts/login.ftlh" as l>
 
 <@c.page>
+${message?ifExists}
 <div class="col mt-2">
     <h5><span class="badge rounded-pill text-bg-light">Login page</span></h5>
 </div>
