@@ -20,7 +20,7 @@ import javax.persistence.FetchType;
 public class Message {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     private String text;
     private String tag;
     @ManyToOne(fetch = FetchType.EAGER)
