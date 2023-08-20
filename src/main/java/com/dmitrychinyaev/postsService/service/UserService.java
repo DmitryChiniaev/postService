@@ -6,10 +6,8 @@ import com.dmitrychinyaev.postsService.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +19,17 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public void saveUser(User user){
+    public void saveUser(User user, String username, Map<String,String> form){
+        user.setUsername(username);
+        Set<String> roles = Arrays.stream(Role.values())
+                .map(Role::name)
+                .collect(Collectors.toSet());
+        user.getRoles().clear();
+        for (String key : form.keySet()) {
+            if (roles.contains(key)) {
+                user.getRoles().add(Role.valueOf(key));
+            }
+        }
         userRepository.save(user);
     }
 
@@ -38,9 +46,12 @@ public class UserService {
         user.setRoles(Collections.singleton(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
         userRepository.save(user);
+        sendMessage(user);
+        return true;
+    }
 
+    private void sendMessage(User user) {
         Optional<String> emailToActivate = Optional.ofNullable(user.getEmail());
-
         if (emailToActivate.isPresent()) {
             String textToSend = String.format(
                     "Hello and welcome, %s! \n" +
@@ -50,7 +61,6 @@ public class UserService {
             );
             mailSenderService.sendEmail(user.getEmail(), "Activation code", textToSend);
         }
-        return true;
     }
 
     public boolean activateUser(String code) {
@@ -63,5 +73,22 @@ public class UserService {
             userRepository.save(user);
             return true;
         }
+    }
+
+    public void updateProfile(User user, String password, String email) {
+        Optional<String> emailReceived = Optional.ofNullable(email);
+        Optional<String> userEmail = Optional.ofNullable(user.getEmail());
+        Optional<String> passwordReceived = Optional.ofNullable(password);
+
+        boolean isEmailChanged = (emailReceived.isPresent() && !emailReceived.equals(userEmail)) ||
+                (userEmail.isPresent() && !userEmail.equals(emailReceived));
+
+        if (isEmailChanged) {
+            emailReceived.ifPresent(user::setEmail);
+            passwordReceived.ifPresent(user::setPassword);
+            user.setActivationCode(UUID.randomUUID().toString());
+        }
+        userRepository.save(user);
+        sendMessage(user);
     }
 }

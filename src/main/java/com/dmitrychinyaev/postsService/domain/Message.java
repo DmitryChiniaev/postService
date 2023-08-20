@@ -19,7 +19,7 @@ import javax.persistence.FetchType;
 @NoArgsConstructor
 public class Message {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String text;
     private String tag;

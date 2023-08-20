@@ -18,7 +18,7 @@ import java.util.Set;
 @Setter
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Size(min = 2, max = 200, message
             = "Must be between 2 and 200 characters")
