@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Set;
@@ -20,18 +21,23 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Size(min = 2, max = 200, message
-            = "Must be between 2 and 200 characters")
+    @NotBlank
+    @Size(min = 2, max = 200, message = "Username must be between 2 and 200 characters")
     private String username;
-    @Size(min = 2, max = 20, message
-            = "Must be between 2 and 20 characters")
+    @NotBlank
+    @Size(min = 2, max = 20, message = "Password must be between 2 and 20 characters")
     private String password;
+    @NotBlank
+    @Size(min = 2, max = 20, message = "Password confirmation is empty")
+    @Transient
+    private String passwordConfirmation;
     private boolean active;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set <Role> roles;
     @Email(message = "Email should be valid")
+    @NotBlank(message = "Email is empty")
     private String email;
     private String activationCode;
 

@@ -4,6 +4,7 @@ import com.dmitrychinyaev.postsService.domain.Role;
 import com.dmitrychinyaev.postsService.domain.User;
 import com.dmitrychinyaev.postsService.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final MailSenderService mailSenderService;
+    private final PasswordEncoder passwordEncoderUserService;
 
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
@@ -38,13 +40,14 @@ public class UserService {
     }
 
     public boolean addUser(User user) {
-        User checkUser = userRepository.findByUsername(user.getUsername());
-        if (checkUser != null) {
+        Optional<User> optionalUser = Optional.ofNullable(userRepository.findByUsername(user.getUsername()));
+        if(optionalUser.isPresent()){
             return false;
         }
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoderUserService.encode(user.getPassword()));
         userRepository.save(user);
         sendMessage(user);
         return true;
