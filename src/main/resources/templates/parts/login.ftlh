@@ -2,21 +2,49 @@
 <form action="${path}" method="post">
     <div class="col-sm-4">
         <div class="form-floating mb-3">
-            <input type="text" name="username" class="form-control" id="floatingInput" placeholder="User name"/>
+            <input type="text" name="username" value="<#if user??>${user.username}</#if>"
+            class="form-control ${(usernameError??)?string('is-invalid','')" id="floatingInput" placeholder="User name"/>
             <label for="floatingInput">User name</label>
+            <#if usernameError??>
+                <div class="invalid-feedback">
+                    ${usernameError}
+                </div>
+            </#if>
         </div>
     </div>
     <div class="col-sm-4">
          <div class="form-floating mb-3">
-            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password"/>
+            <input type="password" name="password" value="<#if user??>${user.email}</#if>"
+            class="form-control ${(passwordError??)?string('is-invalid','')" id="floatingPassword" placeholder="Password"/>
             <label for="floatingPassword">Password</label>
+            <#if passwordError??>
+                <div class="invalid-feedback">
+                    ${passwordError}
+                </div>
+            </#if>
         </div>
     </div>
     <#if isRegisterForm>
     <div class="col-sm-4">
          <div class="form-floating mb-3">
-            <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="john@smith.com"/>
+            <input type="password" name="passwordConfirmation" class="form-control ${(passwordConfirmationError??)?string('is-invalid','')" id="floatingRetypePassword" placeholder="Retype Password"/>
+            <label for="floatingRetypePassword">Retype Password</label>
+            <#if passwordConfirmationError??>
+                <div class="invalid-feedback">
+                    ${passwordConfirmationError}
+                </div>
+            </#if>
+        </div>
+    </div>
+    <div class="col-sm-4">
+         <div class="form-floating mb-3">
+            <input type="email" name="email" class="form-control ${(emailError??)?string('is-invalid','')" id="floatingEmail" placeholder="john@smith.com"/>
             <label for="floatingEmail">E-mail</label>
+            <#if emailError??>
+                <div class="invalid-feedback">
+                    ${emailError}
+                </div>
+            </#if>
         </div>
     </div>
     </#if>

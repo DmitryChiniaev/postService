@@ -29,7 +29,6 @@ public class RegistrationController {
         if (user.getPassword()!=null && !user.getPassword().equals(user.getPasswordConfirmation())){
             model.addAttribute("passwordError","Passwords are not equal");
         }
-
         if(bindingResult.hasErrors()){
             Map<String,String> errors = bindingResult.getFieldErrors().stream()
                     .collect(Collectors.toMap(
@@ -39,7 +38,6 @@ public class RegistrationController {
             model.mergeAttributes(errors);
             return "registration";
         }
-
         if(!userService.addUser(user)){
             model.addAttribute("usernameError", "User already exists!");
             return "registration";
