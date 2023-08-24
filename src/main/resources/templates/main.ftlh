@@ -1,8 +1,5 @@
 <#import "parts/common.ftlh" as c>
 <@c.page>
-
-<img src="/img/1.jpg" class="img-fluid rounded-start">
-
 <div class="col mt-2">
     <h5><span class="badge rounded-pill text-bg-light"><a href="/user">User list</a></span></h5>
 </div>

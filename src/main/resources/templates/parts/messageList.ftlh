@@ -13,14 +13,6 @@
                         <p class="card-text"><span>${message.text}</span><br/></p>
                         <p class="card-text"><small class="text-body-secondary"><strong>
                             <a href="/user-messages/${message.author.id}">${message.authorName}</a>
-                            <a class="col align-self-center" href="/messages/${message.id}/like">
-                               <#if message.meLiked>
-                                   <i class="fas fa-heart"></i>
-                               <#else>
-                                   <i class="far fa-heart"></i>
-                               </#if>
-                               ${message.likes}
-                            </a>
                             <#if message.author.id == currentUserId>
                                 <a class="btn btn-primary" href="/user-messages/${message.author.id}?message=${message.id}">
                                     Edit
@@ -33,6 +25,6 @@
         </div>
     </div>
     <#else>
-    No message
+
     </#list>
 </div>
