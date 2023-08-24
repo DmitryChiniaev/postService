@@ -1,4 +1,6 @@
 <#import "login.ftlh" as l>
+<#include "security.ftlh">
+
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">PostService</a>
@@ -12,11 +14,16 @@
           <a class="nav-link active" aria-current="page" href="/">Main page</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/main">Messages list</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/user/profile">Profile</a>
         </li>
+        <#if user??>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/main">Messages list</a>
+        </li>
+         <li class="nav-item">
+           <a class="nav-link" href="/user-messages/${currentUserId}">My messages</a>
+         </li>
+         </#if>
       </ul>
       <@l.logout />
     </div>

@@ -1,14 +1,5 @@
-<#import "parts/common.ftlh" as c>
-<@c.page>
-
-<img src="/img/1.jpg" class="img-fluid rounded-start">
-
-<div class="col mt-2">
-    <h5><span class="badge rounded-pill text-bg-light"><a href="/user">User list</a></span></h5>
-</div>
-
 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-  New message
+  Message editor
 </a>
 <div class="collapse <#if message??>show</#if>" id="collapseExample">
 <form class="row g-3 mt-2" method="post" enctype="multipart/form-data">
@@ -32,22 +23,3 @@
     </div>
 </form>
 </div>
-<form class="row gx-5 mt-2" method="get" action="/main">
-    <div class="col-3">
-        <input class="form-control" type="text" name="tagFilter" value="${tagFilter?ifExists}" required>
-    </div>
-    <div class="col">
-        <button type="submit" class="btn btn-outline-primary">Найти по тегу</button>
-    </div>
-</form>
-
-<form class="row gx-5" method="get" action="/main">
-    <div class="col-3">
-        <input class="form-control" type="text" name="filter" value="${filter?ifExists}" required>
-    </div>
-    <div class="col">
-        <button type="submit" class="btn btn-outline-primary">Найти по автору</button>
-    </div>
-</form>
-<#include "parts/messageList.ftlh" />
-</@c.page>
